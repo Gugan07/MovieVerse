@@ -1,58 +1,118 @@
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 const Navbar = () => {
   const [user, setUser] = useState(null)
+  const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
-    }
+    if (userData) setUser(JSON.parse(userData))
+    const handleScroll = () => setScrolled(window.scrollY > 10)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const navLinks = [
+    { to: '/', label: 'Films' },
+    { to: '/categories', label: 'Categories' },
+    { to: '/articles', label: 'Articles' },
+    { to: '/shortfilms', label: 'Short Films' },
+    { to: '/masterclass', label: 'Masterclass' },
+    { to: '/festivals', label: 'Festivals' },
+    { to: '/filmschools', label: 'Film Schools' },
+  ]
+
   return (
-    <nav className="bg-[#14181c] border-b border-gray-800 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to="/" className="text-2xl font-bold text-white">
-            🎬 CineVerse
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0d0f12]/95 backdrop-blur-lg border-b border-white/8' : 'bg-[#0d0f12] border-b border-white/5'}`}>
+      {/* Amber top accent bar */}
+      <div className="h-0.5 bg-gradient-to-r from-[#e8a020] via-[#f5c842] to-[#e8a020]" />
+
+      <div className="max-w-7xl mx-auto px-5">
+        <div className="flex justify-between items-center h-14">
+
+          {/* Logo — unique wordmark style */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded bg-[#e8a020] flex items-center justify-center flex-shrink-0 group-hover:rotate-3 transition-transform duration-200">
+              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#0d0f12]">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+              </svg>
+            </div>
+            <div className="leading-none">
+              <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-white font-black text-lg tracking-tight">Cine</span>
+              <span className="text-[#e8a020] font-black text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>Verse</span>
+            </div>
           </Link>
 
-          <div className="flex gap-8 items-center">
-            <Link to="/" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Home
-            </Link>
-            <Link to="/categories" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Categories
-            </Link>
-            <Link to="/articles" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Articles
-            </Link>
-            <Link to="/shortfilms" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Short Films
-            </Link>
-            <Link to="/masterclass" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Masterclass
-            </Link>
-            <Link to="/festivals" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Festivals
-            </Link>
-            <Link to="/filmschools" className="text-gray-300 hover:text-white transition text-sm font-medium">
-              Film Schools
-            </Link>
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-5">
+            {navLinks.map(link => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                end={link.to === '/'}
+                className={({ isActive }) =>
+                  `text-[11px] font-semibold tracking-widest uppercase transition-all duration-200 pb-0.5 ${
+                    isActive
+                      ? 'text-[#e8a020] border-b border-[#e8a020]'
+                      : 'text-[#7a8694] hover:text-[#d4dce5]'
+                  }`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </div>
+
+          {/* Auth */}
+          <div className="hidden md:flex items-center gap-3">
             {user ? (
-              <Link to="/profile" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 font-medium text-sm">
+              <Link to="/profile" className="flex items-center gap-2 bg-[#1a1e26] text-white px-3 py-1.5 rounded-md text-xs font-semibold hover:bg-[#22273a] transition-colors border border-white/8">
+                <div className="w-5 h-5 rounded-full bg-[#e8a020] flex items-center justify-center text-[#0d0f12] text-xs font-black">
+                  {user.name?.[0]?.toUpperCase()}
+                </div>
                 {user.name}
               </Link>
             ) : (
-              <Link to="/login" className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 font-medium text-sm">
-                Sign In
-              </Link>
+              <div className="flex items-center gap-3">
+                <Link to="/login" className="text-[11px] font-semibold uppercase tracking-widest text-[#7a8694] hover:text-white transition-colors">
+                  Sign In
+                </Link>
+                <Link to="/login" className="bg-[#e8a020] text-[#0d0f12] px-3.5 py-1.5 rounded-md text-[11px] font-black uppercase tracking-wider hover:bg-[#f5c842] transition-colors">
+                  Join
+                </Link>
+              </div>
             )}
           </div>
+
+          {/* Mobile toggle */}
+          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden text-[#a0aab4] p-1.5">
+            <svg viewBox="0 0 20 20" className="w-5 h-5 fill-current">
+              {menuOpen
+                ? <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" />
+                : <path fillRule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" />
+              }
+            </svg>
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-[#111318] border-t border-white/5 px-5 py-4">
+          {navLinks.map(link => (
+            <Link key={link.to} to={link.to} onClick={() => setMenuOpen(false)}
+              className="block py-2.5 text-sm text-[#7a8694] hover:text-white font-medium border-b border-white/5 last:border-0">
+              {link.label}
+            </Link>
+          ))}
+          <Link to="/login" onClick={() => setMenuOpen(false)}
+            className="mt-3 inline-block bg-[#e8a020] text-[#0d0f12] px-5 py-2 rounded-md text-xs font-black uppercase tracking-wider">
+            Sign In / Join
+          </Link>
+        </div>
+      )}
     </nav>
   )
 }

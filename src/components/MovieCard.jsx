@@ -1,29 +1,83 @@
 import { Link } from 'react-router-dom'
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, isTmdb = false }) => {
+  const rating = parseFloat(movie.rating)
+  const ratingColor = rating >= 8.0 ? '#e8a020' : rating >= 7.0 ? '#f5c842' : rating >= 6.0 ? '#a0aab4' : '#6a7480'
+
+  // TMDB movies link to their TMDB detail page (within our site)
+  const linkTo = isTmdb
+    ? `/tmdb/${movie.tmdbId}`
+    : `/movie/${movie.id}`
+
+  const posterSrc = movie.poster || `https://via.placeholder.com/300x450/131720/e8a020?text=${encodeURIComponent(movie.title)}`
+
   return (
-    <div className="bg-gray-800 rounded p-4">
-      <img 
-        src={movie.poster} 
-        alt={movie.title}
-        className="w-full h-64 object-cover rounded mb-3"
-      />
-      <div className="bg-yellow-500 text-black px-2 py-1 rounded inline-block text-sm font-bold mb-2">
-        ⭐ {movie.rating}
+    <Link to={linkTo} className="group block cv-card rounded-lg overflow-hidden bg-[#131720] transition-all duration-300 cursor-pointer">
+      {/* Poster */}
+      <div className="relative overflow-hidden" style={{ aspectRatio: '2/3' }}>
+        <img
+          src={posterSrc}
+          alt={movie.title}
+          className="w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-500"
+          loading="lazy"
+          onError={e => {
+            e.target.src = `https://placehold.co/300x450/131720/e8a020?text=${encodeURIComponent(movie.title?.slice(0, 12) || 'Film')}`
+          }}
+        />
+
+        {/* Darker gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f12] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Rating badge — top-left */}
+        {rating > 0 && (
+          <div
+            className="absolute top-0 left-0 px-2 py-1 text-[10px] font-black z-10"
+            style={{ backgroundColor: ratingColor, color: '#0d0f12' }}
+          >
+            {movie.rating}
+          </div>
+        )}
+
+        {/* Year — top-right */}
+        {movie.year && (
+          <div className="absolute top-0 right-0 bg-[#0d0f12]/80 px-1.5 py-1 text-[9px] text-[#7a8694] font-semibold">
+            {movie.year}
+          </div>
+        )}
+
+        {/* Hover overlay info */}
+        <div className="absolute bottom-0 left-0 right-0 p-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+          <p className="text-white/85 text-[10px] leading-relaxed line-clamp-3 mb-1.5">
+            {movie.description?.substring(0, 100)}...
+          </p>
+          <span className="text-[#e8a020] text-[10px] font-bold uppercase tracking-wider">Details →</span>
+        </div>
       </div>
-      <h3 className="text-xl font-bold mb-2">
-        {movie.title}
-      </h3>
-      <p className="text-gray-400 text-sm mb-3">
-        {movie.description.substring(0, 100)}...
-      </p>
-      <Link 
-        to={`/movie/${movie.id}`}
-        className="bg-yellow-500 text-black px-4 py-2 rounded inline-block hover:bg-yellow-400"
-      >
-        Read More
-      </Link>
-    </div>
+
+      {/* Card footer */}
+      <div className="px-2.5 py-2">
+        <h3 className="text-white text-[11px] font-bold leading-tight line-clamp-1 group-hover:text-[#e8a020] transition-colors">
+          {movie.title}
+        </h3>
+        {movie.director && (
+          <p className="text-[#4a5462] text-[9px] mt-0.5 line-clamp-1">{movie.director}</p>
+        )}
+        {/* Genre pill */}
+        {movie.genre && (
+          <span className="inline-block mt-1 text-[8px] text-[#5a6472] bg-[#1a1e26] px-1.5 py-0.5 rounded uppercase tracking-wider">
+            {movie.genre}
+          </span>
+        )}
+        {/* Mini star strip */}
+        {rating > 0 && (
+          <div className="flex gap-0.5 mt-1.5">
+            {[1,2,3,4,5].map(s => (
+              <span key={s} className="text-[9px]" style={{ color: s <= Math.round(rating / 2) ? ratingColor : '#2a2e38' }}>★</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </Link>
   )
 }
 

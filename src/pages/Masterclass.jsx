@@ -1,92 +1,158 @@
+import { useState } from 'react'
 import { masterclasses } from '../data/masterclasses'
 
 const Masterclass = () => {
+  const [activeVideo, setActiveVideo] = useState(null)
+
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 py-20 border-b border-gray-800">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-4">🎓 Director Masterclass</h1>
-          <p className="text-xl text-gray-200 mb-6">
-            Learn from the masters of cinema. Exclusive interviews and insights from legendary directors.
+    <div className="min-h-screen bg-[#0d0f12]">
+      {/* Hero */}
+      <div className="relative bg-[#0f1218] border-b border-white/5 py-16 overflow-hidden">
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 28px, #e8a020 28px, #e8a020 29px), repeating-linear-gradient(90deg, transparent, transparent 28px, #e8a020 28px, #e8a020 29px)'
+        }} />
+        <div className="relative max-w-6xl mx-auto px-5 text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <div className="h-px w-12 bg-[#e8a020]" />
+            <span className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em]">Cinema Education</span>
+            <div className="h-px w-12 bg-[#e8a020]" />
+          </div>
+          <h1 className="text-5xl font-black text-white mb-4 tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+            Director Masterclass
+          </h1>
+          <p className="text-[#7a8694] text-base max-w-xl mx-auto leading-relaxed mb-10">
+            Learn the craft directly from the legends who shaped modern cinema.
           </p>
-          <div className="flex justify-center gap-8 text-center">
-            <div>
-              <p className="text-3xl font-bold text-yellow-400">{masterclasses.length}</p>
-              <p className="text-gray-300">Masterclasses</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-yellow-400">6+</p>
-              <p className="text-gray-300">Directors</p>
-            </div>
-            <div>
-              <p className="text-3xl font-bold text-yellow-400">4.5hrs</p>
-              <p className="text-gray-300">Content</p>
-            </div>
+          <div className="flex justify-center gap-16">
+            {[['6', 'Sessions'], ['6', 'Directors'], ['4.5hrs', 'Content']].map(([val, lbl]) => (
+              <div key={lbl}>
+                <div className="text-3xl font-black text-[#e8a020] mb-0.5" style={{ fontFamily: "'Playfair Display', serif" }}>{val}</div>
+                <div className="text-[#4a5462] text-[10px] uppercase tracking-widest">{lbl}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Masterclass Grid */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {masterclasses.map(masterclass => (
-            <div 
-              key={masterclass.id} 
-              className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-2xl border border-gray-700"
-            >
-              <div className="relative h-64 overflow-hidden">
-                <img 
-                  src={masterclass.thumbnail} 
-                  alt={masterclass.director}
-                  className="w-full h-full object-cover"
+      {/* Inline Video Modal */}
+      {activeVideo && (
+        <div className="fixed inset-0 z-50 bg-[#0d0f12]/95 backdrop-blur flex items-center justify-center p-4" onClick={() => setActiveVideo(null)}>
+          <div className="w-full max-w-4xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-start justify-between mb-3">
+              <div>
+                <h2 className="text-white font-black text-lg" style={{ fontFamily: "'Playfair Display', serif" }}>{activeVideo.director}</h2>
+                <p className="text-[#7a8694] text-sm">{activeVideo.title}</p>
+              </div>
+              <button onClick={() => setActiveVideo(null)}
+                className="w-8 h-8 flex items-center justify-center text-[#7a8694] hover:text-white border border-white/10 rounded transition-colors text-sm">
+                ✕
+              </button>
+            </div>
+            <div className="rounded-xl overflow-hidden border border-white/5" style={{ aspectRatio: '16/9' }}>
+              <iframe
+                src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&rel=0`}
+                title={activeVideo.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="w-full h-full"
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Grid */}
+      <div className="max-w-6xl mx-auto px-5 py-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {masterclasses.map((mc) => (
+            <div key={mc.id} className="group bg-[#0f1218] rounded-xl overflow-hidden border border-white/5 hover:border-[#e8a020]/25 transition-all duration-300">
+
+              {/* Thumbnail */}
+              <div className="relative overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                <img
+                  src={mc.thumbnail}
+                  alt={mc.director}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-75"
+                  onError={e => { e.target.src = `https://img.youtube.com/vi/${mc.youtubeId}/hqdefault.jpg` }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                <div className="absolute bottom-4 left-4">
-                  <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-bold">
-                    ⏱️ {masterclass.duration}
-                  </span>
+                {/* Play */}
+                <button
+                  onClick={() => setActiveVideo(mc)}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-[#e8a020] flex items-center justify-center shadow-xl group-hover:scale-110 transition-transform duration-300">
+                    <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#0d0f12] ml-0.5">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </button>
+                {/* Duration */}
+                <div className="absolute bottom-2 right-2 bg-[#0d0f12]/85 text-[#e8a020] text-[10px] px-2 py-0.5 rounded font-mono font-bold">
+                  {mc.duration}
                 </div>
               </div>
-              
-              <div className="p-6">
-                <h3 className="text-2xl font-bold mb-2 text-yellow-400">{masterclass.director}</h3>
-                <h4 className="text-xl font-semibold mb-3">{masterclass.title}</h4>
-                <p className="text-gray-400 mb-4 leading-relaxed">{masterclass.description}</p>
-                
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {masterclass.topics.map((topic, index) => (
-                    <span 
-                      key={index}
-                      className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm"
-                    >
-                      {topic}
+
+              {/* Content */}
+              <div className="p-5">
+                {/* Director row with photo */}
+                <div className="flex items-center gap-3 mb-4 pb-4 border-b border-white/5">
+                  <img
+                    src={mc.photo}
+                    alt={mc.director}
+                    className="w-10 h-10 rounded-full object-cover object-top ring-2 ring-[#e8a020]/30"
+                    onError={e => { e.target.style.display = 'none' }}
+                  />
+                  <div>
+                    <div className="text-white font-bold text-sm">{mc.director}</div>
+                    <div className="text-[#4a5462] text-[10px] uppercase tracking-widest">Director</div>
+                  </div>
+                </div>
+
+                <h3 className="text-white font-black text-sm mb-2 group-hover:text-[#e8a020] transition-colors leading-snug" style={{ fontFamily: "'Playfair Display', serif" }}>
+                  {mc.title}
+                </h3>
+                <p className="text-[#5a6472] text-xs leading-relaxed mb-4 line-clamp-2">
+                  {mc.description}
+                </p>
+
+                {/* Topics */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {mc.topics.map((t, i) => (
+                    <span key={i} className="text-[10px] text-[#e8a020] bg-[#e8a020]/8 border border-[#e8a020]/15 px-2 py-0.5 rounded-full font-semibold">
+                      {t}
                     </span>
                   ))}
                 </div>
-                
-                <a 
-                  href={masterclass.youtubeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block w-full bg-yellow-500 text-black font-bold py-3 rounded-lg hover:bg-yellow-400 transition text-center"
-                >
-                  ▶ Watch on YouTube
-                </a>
+
+                {/* Actions */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setActiveVideo(mc)}
+                    className="flex-1 bg-[#e8a020] text-[#0d0f12] font-black py-2 rounded text-[11px] uppercase tracking-widest hover:bg-[#f5c842] transition-colors"
+                  >
+                    ▶ Watch
+                  </button>
+                  <a
+                    href={mc.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#1a1e26] border border-white/8 text-[#7a8694] font-semibold py-2 px-3 rounded text-[11px] hover:text-white hover:border-white/20 transition-colors"
+                  >
+                    YouTube ↗
+                  </a>
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Call to Action */}
-      <div className="bg-gray-900 py-12 mt-12 border-t border-gray-800">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Want to Share Your Knowledge?</h2>
-          <p className="text-gray-400 mb-6">
-            Are you a filmmaker with insights to share? Submit your masterclass proposal.
-          </p>
-          <button className="bg-yellow-500 text-black px-8 py-3 rounded-lg font-bold hover:bg-yellow-400 transition">
+      {/* CTA */}
+      <div className="bg-[#0f1218] border-t border-white/5 py-14">
+        <div className="max-w-lg mx-auto px-5 text-center">
+          <h2 className="text-2xl font-black text-white mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>Want to Share Your Craft?</h2>
+          <p className="text-[#5a6472] text-sm mb-6">Submit a masterclass proposal and inspire the next generation of filmmakers.</p>
+          <button className="bg-[#e8a020] text-[#0d0f12] px-8 py-3 rounded-md font-black text-sm uppercase tracking-wider hover:bg-[#f5c842] transition-colors">
             Submit Proposal
           </button>
         </div>
