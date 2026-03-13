@@ -32,18 +32,8 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex justify-between items-center h-14">
 
-          {/* Logo — unique wordmark style */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded bg-[#e8a020] flex items-center justify-center flex-shrink-0 group-hover:rotate-3 transition-transform duration-200">
-              <svg viewBox="0 0 24 24" className="w-5 h-5 fill-[#0d0f12]">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
-              </svg>
-            </div>
-            <div className="leading-none">
-              <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-white font-black text-lg tracking-tight">Film</span>
-              <span className="text-[#e8a020] font-black text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>Verse</span>
-            </div>
-          </Link>
+          {/* Logo removed */}
+          <div />
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-5">
