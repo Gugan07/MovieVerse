@@ -7,27 +7,32 @@ const HeroSection = ({ movie }) => {
     <div className="relative min-h-[70vh] flex items-end overflow-hidden">
       {/* Full-bleed background poster */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 bg-cover bg-center brightness-[0.7] transform scale-105"
         style={{ backgroundImage: `url(${movie.poster})` }}
       />
+      {/* Decorative Layer: Grain/Texture */}
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
+        backgroundImage: 'url("https://www.transparenttextures.com/patterns/natural-paper.png")'
+      }} />
+
       {/* Layered overlays for editorial feel */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0f12] via-[#0d0f12]/75 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f12] via-transparent to-[#0d0f12]/30" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0d0f12] via-[#0d0f12]/80 via-30% to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f12] via-transparent to-transparent" />
 
       {/* Decorative side element */}
       <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-[#e8a020] to-transparent opacity-60" />
 
-      <div className="relative max-w-7xl mx-auto px-5 pb-16 pt-28 w-full">
-        <div className="max-w-2xl">
+      <div className="relative max-w-7xl mx-auto px-5 pb-20 pt-44 w-full z-10">
+        <div className="max-w-2xl animate-in fade-in slide-in-from-left-4 duration-700">
           {/* Label */}
-          <div className="flex items-center gap-3 mb-4">
-            <div className="h-px w-8 bg-[#e8a020]" />
-            <span className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em]">Featured Review</span>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="h-px w-10 bg-[#e8a020]" />
+            <span className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.3em]">Cinephile Choice</span>
           </div>
 
           {/* Title */}
           <h1
-            className="text-5xl md:text-7xl font-black text-white leading-[0.95] mb-3 tracking-tight"
+            className="text-6xl md:text-8xl font-black text-white leading-none mb-6 tracking-tighter"
             style={{ fontFamily: "'Playfair Display', serif" }}
           >
             {movie.title}

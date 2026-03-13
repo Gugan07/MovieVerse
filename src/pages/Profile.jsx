@@ -154,13 +154,18 @@ const Profile = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-[#0d0f12]">
+    <div className="min-h-screen bg-[#0d0f12] fade-in">
       {/* ── Profile header banner ── */}
-      <div className="bg-[#0f1218] border-b border-white/5">
+      <div className="bg-[#0f1218] border-b border-white/5 relative overflow-hidden">
+        {/* Grain Overlay */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{
+          backgroundImage: 'url("https://www.transparenttextures.com/patterns/natural-paper.png")'
+        }} />
+        
         {/* Decorative top bar */}
-        <div className="h-1 bg-gradient-to-r from-[#e8a020] via-[#f5c842] to-[#e8a020]" />
+        <div className="h-1 bg-gradient-to-r from-[#e8a020] via-[#f5c842] to-[#e8a020] relative z-10" />
 
-        <div className="max-w-5xl mx-auto px-5 py-10">
+        <div className="max-w-5xl mx-auto px-5 py-16 relative z-10">
           <div className="flex flex-col md:flex-row items-start md:items-end gap-6">
 
             {/* Avatar */}
@@ -204,16 +209,16 @@ const Profile = () => {
           </div>
 
           {/* Stats strip */}
-          <div className="flex gap-8 mt-8 pt-6 border-t border-white/5">
+          <div className="flex flex-wrap gap-10 md:gap-14 mt-12 pt-8 border-t border-white/5">
             {[
               { val: ratingCount,    label: 'Films Rated' },
               { val: watchlistCount, label: 'Watchlist' },
               { val: commentCount,   label: 'Comments' },
               { val: Object.values(getLikes()).filter(Boolean).length, label: 'Articles Liked' },
-            ].map(s => (
-              <div key={s.label}>
-                <div className="text-[#e8a020] text-2xl font-black">{s.val}</div>
-                <div className="text-[#4a5462] text-[10px] uppercase tracking-wider">{s.label}</div>
+            ].map((s, i) => (
+              <div key={s.label} className="fade-up" style={{ animationDelay: `${i * 100}ms` }}>
+                <div className="text-[#e8a020] text-3xl font-black mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>{s.val}</div>
+                <div className="text-[#4a5462] text-[10px] font-black uppercase tracking-[0.25em]">{s.label}</div>
               </div>
             ))}
           </div>

@@ -27,7 +27,7 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center px-4 py-16">
       <div className="bg-gray-900 p-8 rounded-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center mb-6">
-          {isLogin ? 'Welcome Back' : 'Join CineVerse'}
+          {isLogin ? 'Welcome Back' : 'Join FilmVerse'}
         </h1>
         
         <form onSubmit={handleSubmit} className="space-y-4">

@@ -12,7 +12,7 @@ const MovieCard = ({ movie, isTmdb = false }) => {
   const posterSrc = movie.poster || `https://via.placeholder.com/300x450/131720/e8a020?text=${encodeURIComponent(movie.title)}`
 
   return (
-    <Link to={linkTo} className="group block cv-card rounded-lg overflow-hidden bg-[#131720] transition-all duration-300 cursor-pointer">
+    <Link to={linkTo} className="group block cv-card rounded-2xl overflow-hidden bg-[#131720] border border-white/5 transition-all duration-500 cursor-pointer fade-up">
       {/* Poster */}
       <div className="relative overflow-hidden" style={{ aspectRatio: '2/3' }}>
         <img
@@ -46,11 +46,15 @@ const MovieCard = ({ movie, isTmdb = false }) => {
         )}
 
         {/* Hover overlay info */}
-        <div className="absolute bottom-0 left-0 right-0 p-2.5 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-          <p className="text-white/85 text-[10px] leading-relaxed line-clamp-3 mb-1.5">
+        {/* Hover overlay info */}
+        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 bg-gradient-to-t from-[#0d0f12] via-[#0d0f12]/80 to-transparent">
+          <p className="text-white/80 text-[10px] leading-relaxed line-clamp-2 mb-2 font-medium">
             {movie.description?.substring(0, 100)}...
           </p>
-          <span className="text-[#e8a020] text-[10px] font-bold uppercase tracking-wider">Details →</span>
+          <div className="flex items-center gap-1.5 text-[#e8a020] text-[9px] font-black uppercase tracking-widest">
+            <span>Learn More</span>
+            <span className="text-xs">→</span>
+          </div>
         </div>
       </div>
 

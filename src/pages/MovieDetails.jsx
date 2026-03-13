@@ -244,19 +244,24 @@ const MovieDetails = () => {
             </div>
 
             {/* Review */}
-            <div className="bg-[#0f1218] rounded-xl border border-white/5 border-l-2 border-l-[#e8a020] p-6 mb-8">
-              <div className="flex items-center justify-between mb-5">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 bg-[#e8a020] rounded flex items-center justify-center text-[#0d0f12] text-xs font-black">C</div>
+            <div className="bg-[#0f1218] rounded-3xl border border-white/5 border-l-[3px] border-l-[#e8a020] p-10 mb-12 glass-premium shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#e8a020]/5 rounded-full -translate-y-16 translate-x-16 blur-3xl" />
+              
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-[#e8a020] rounded-xl flex items-center justify-center text-[#0d0f12] text-sm font-black shadow-lg shadow-[#e8a020]/20">F</div>
                   <div>
-                    <div className="text-white text-sm font-black">CineVerse Review</div>
-                    <div className="text-[#3a4048] text-[10px]">Editorial</div>
+                    <div className="text-white text-base font-black tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>FilmVerse Editorial</div>
+                    <div className="text-[#3a4048] text-[10px] font-black uppercase tracking-[0.2em]">Master Review</div>
                   </div>
                 </div>
-                <span className="text-[#e8a020] font-black">{movie.rating}/10</span>
+                <div className="text-[#e8a020] text-3xl font-black" style={{ fontFamily: "'Playfair Display', serif" }}>{movie.rating}<span className="text-[#3a4048] text-sm uppercase">/10</span></div>
               </div>
-              <div className="text-[#b0bac4] leading-[1.85] text-sm" style={{ fontFamily: "'Georgia', serif" }}>
-                {movie.fullReview}
+
+              <div className="text-[#b0bac4] leading-[1.8] text-lg max-w-none" style={{ fontFamily: "'Georgia', serif" }}>
+                <p className="first-letter:text-6xl first-letter:font-black first-letter:text-[#e8a020] first-letter:mr-3 first-letter:float-left first-letter:leading-[1]">
+                  {movie.fullReview}
+                </p>
               </div>
             </div>
 

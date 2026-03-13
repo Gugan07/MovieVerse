@@ -17,7 +17,7 @@ const Footer = () => {
                 </svg>
               </div>
               <span className="font-black text-base text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
-                Cine<span className="text-[#e8a020]">Verse</span>
+                Film<span className="text-[#e8a020]">Verse</span>
               </span>
             </div>
             <p className="text-[#3a4048] text-xs leading-relaxed">
@@ -43,7 +43,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-3">
-          <p className="text-[#2a2e38] text-xs">© 2024 CineVerse. Built for cinephiles.</p>
+          <p className="text-[#2a2e38] text-xs">© 2024 FilmVerse. Built for cinephiles.</p>
           <p className="text-[#2a2e38] text-xs">Film journalism reimagined.</p>
         </div>
       </div>

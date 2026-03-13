@@ -25,9 +25,9 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0d0f12]/95 backdrop-blur-lg border-b border-white/8' : 'bg-[#0d0f12] border-b border-white/5'}`}>
+    <nav className={`sticky top-0 z-50 transition-all duration-500 ${scrolled ? 'glass-premium py-1 shadow-2xl' : 'bg-[#0d0f12] py-2 border-b border-white/5'}`}>
       {/* Amber top accent bar */}
-      <div className="h-0.5 bg-gradient-to-r from-[#e8a020] via-[#f5c842] to-[#e8a020]" />
+      <div className={`h-0.5 bg-gradient-to-r from-[#e8a020] via-[#f5c842] to-[#e8a020] absolute top-0 left-0 right-0 transition-opacity duration-300 ${scrolled ? 'opacity-100' : 'opacity-40'}`} />
 
       <div className="max-w-7xl mx-auto px-5">
         <div className="flex justify-between items-center h-14">
@@ -40,7 +40,7 @@ const Navbar = () => {
               </svg>
             </div>
             <div className="leading-none">
-              <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-white font-black text-lg tracking-tight">Cine</span>
+              <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-white font-black text-lg tracking-tight">Film</span>
               <span className="text-[#e8a020] font-black text-lg tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>Verse</span>
             </div>
           </Link>
@@ -53,14 +53,21 @@ const Navbar = () => {
                 to={link.to}
                 end={link.to === '/'}
                 className={({ isActive }) =>
-                  `text-[11px] font-semibold tracking-widest uppercase transition-all duration-200 pb-0.5 ${
+                  `text-[10px] font-black tracking-[0.2em] uppercase transition-all duration-300 relative px-1 ${
                     isActive
-                      ? 'text-[#e8a020] border-b border-[#e8a020]'
-                      : 'text-[#7a8694] hover:text-[#d4dce5]'
+                      ? 'text-[#e8a020]'
+                      : 'text-[#5a6472] hover:text-white'
                   }`
                 }
               >
-                {link.label}
+                {({ isActive }) => (
+                  <>
+                    {link.label}
+                    {isActive && (
+                      <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1 h-1 bg-[#e8a020] rounded-full shadow-[0_0_8px_#e8a020]" />
+                    )}
+                  </>
+                )}
               </NavLink>
             ))}
           </div>

@@ -19,7 +19,7 @@ const Home = () => {
   const heroMovie = editorialMovies[0]
 
   return (
-    <div className="bg-[#0d0f12]">
+    <div className="bg-[#0d0f12] fade-in">
       <HeroSection movie={heroMovie} />
 
       {/* Trending This Week — from TMDB */}
@@ -120,19 +120,25 @@ const Home = () => {
       </div>
 
       {/* Stats */}
-      <div className="max-w-7xl mx-auto px-5 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="max-w-7xl mx-auto px-5 py-20 border-t border-white/5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { val: '8', label: 'Film Reviews', icon: '🎬' },
             { val: '3', label: 'Film Articles', icon: '📝' },
             { val: '6', label: 'Masterclasses', icon: '🎓' },
             { val: '500K+', label: 'TMDB Films', icon: '🎭' },
-          ].map(s => (
-            <div key={s.label} className="bg-[#131720] rounded-lg p-5 border border-white/5 flex items-center gap-4">
-              <span className="text-2xl">{s.icon}</span>
+          ].map((s, i) => (
+            <div 
+              key={s.label} 
+              className="glass-premium rounded-2xl p-6 flex items-center gap-4 hover:border-[#e8a020]/30 transition-all duration-500 fade-up"
+              style={{ animationDelay: `${i * 100}ms` }}
+            >
+              <div className="w-12 h-12 rounded-xl bg-[#e8a020]/10 flex items-center justify-center text-2xl shadow-inner">
+                {s.icon}
+              </div>
               <div>
-                <div className="text-[#e8a020] text-2xl font-black leading-none mb-0.5">{s.val}</div>
-                <div className="text-[#5a6472] text-[10px] uppercase tracking-wider">{s.label}</div>
+                <div className="text-white text-3xl font-black leading-none mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>{s.val}</div>
+                <div className="text-[#5a6472] text-[10px] font-black uppercase tracking-[0.2em]">{s.label}</div>
               </div>
             </div>
           ))}

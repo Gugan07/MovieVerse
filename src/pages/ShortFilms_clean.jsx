@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { languages, genres } from '../data/shortFilms'
 import {
   getShortFilms, saveShortFilm,
@@ -6,7 +6,7 @@ import {
   getFilmComments, addFilmComment, deleteFilmComment,
 } from '../services/storage'
 
-// ── Genre & Language colour maps ────────────────────────────────────────────────
+// â”€â”€ Genre & Language colour maps â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const GENRE_COLORS = {
   Animation: '#e8a020',
   Drama:     '#a78bfa',
@@ -22,16 +22,9 @@ const LANG_COLORS = {
   English: { bg: '#34d399', text: '#0d0f12' },
 }
 
-const LANG_FLAGS = { Tamil: '🇮🇳', Hindi: '🇮🇳', English: '🇬🇧' }
+const LANG_FLAGS = { Tamil: 'ðŸ‡®ðŸ‡³', Hindi: 'ðŸ‡®ðŸ‡³', English: 'ðŸ‡¬ðŸ‡§' }
 
-// ── YouTube ID extractor ────────────────────────────────────────────────────────
-const extractYouTubeId = (url) => {
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-  const match = url.match(regExp)
-  return (match && match[2].length === 11) ? match[2] : url
-}
-
-// ── Inline YouTube player modal ──────────────────────────────────────────────────
+// â”€â”€ YouTube ID extractor â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â// â”€â”€ Inline YouTube player modal â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const VideoModal = ({ film, onClose }) => {
   const accentColor = GENRE_COLORS[film.genre] || '#e8a020'
 
@@ -53,7 +46,7 @@ const VideoModal = ({ film, onClose }) => {
   }
 
   const handleShare = async () => {
-    const text = `${film.title} (${film.year}) — Dir. ${film.director}`
+    const text = `${film.title} (${film.year}) â€” Dir. ${film.director}`
     const url  = `https://www.youtube.com/watch?v=${film.youtubeId}`
     if (navigator.share) {
       try { await navigator.share({ title: film.title, text, url }) } catch {}
@@ -111,13 +104,13 @@ const VideoModal = ({ film, onClose }) => {
               <h2 className="text-white font-black text-xl" style={{ fontFamily: "'Playfair Display', serif" }}>
                 {film.title}
               </h2>
-              <p className="text-[#7a8694] text-sm">Dir. {film.director} · {film.year} · {film.duration}</p>
+              <p className="text-[#7a8694] text-sm">Dir. {film.director} Â· {film.year} Â· {film.duration}</p>
             </div>
             <button
               onClick={onClose}
               className="w-9 h-9 flex items-center justify-center text-[#7a8694] hover:text-white border border-white/10 hover:border-white/30 rounded-lg transition-colors ml-4 flex-shrink-0 text-lg"
             >
-              ✕
+              âœ•
             </button>
           </div>
 
@@ -137,13 +130,13 @@ const VideoModal = ({ film, onClose }) => {
             <p className="text-[#a0aab4] text-sm leading-relaxed italic">"{film.note}"</p>
             {film.awards && (
               <div className="flex items-center gap-2 mt-3">
-                <span className="text-[#e8a020]">🏆</span>
+                <span className="text-[#e8a020]">ðŸ†</span>
                 <span className="text-[#e8a020] text-xs font-black uppercase tracking-wider">{film.awards}</span>
               </div>
             )}
           </div>
 
-          {/* ── Actions bar ── */}
+          {/* â”€â”€ Actions bar â”€â”€ */}
           <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/5">
             {/* Like */}
             <button
@@ -153,7 +146,7 @@ const VideoModal = ({ film, onClose }) => {
               }`}
               style={!liked ? { backgroundColor: accentColor } : {}}
             >
-              <span>{liked ? '♥' : '♡'}</span>
+              <span>{liked ? 'â™¥' : 'â™¡'}</span>
               <span>{liked ? 'Liked' : 'Like'}</span>
               {likeCount > 0 && (
                 <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${liked ? 'bg-white/20' : 'bg-black/15'}`}>
@@ -167,11 +160,11 @@ const VideoModal = ({ film, onClose }) => {
               onClick={handleShare}
               className="flex items-center gap-2 border border-white/10 text-[#7a8694] px-4 py-2 rounded-lg text-xs font-semibold hover:text-white hover:border-white/20 transition-colors"
             >
-              {shareCopied ? '✓ Copied!' : '↗ Share'}
+              {shareCopied ? 'âœ“ Copied!' : 'â†— Share'}
             </button>
           </div>
 
-          {/* ── Comment section ── */}
+          {/* â”€â”€ Comment section â”€â”€ */}
           <div className="mt-6 pt-6 border-t border-white/5">
             <div className="flex items-center gap-3 mb-5">
               <div className="w-0.5 h-5 rounded-full" style={{ backgroundColor: accentColor }} />
@@ -194,7 +187,7 @@ const VideoModal = ({ film, onClose }) => {
                 />
                 <textarea
                   value={commentText} onChange={e => setCommentText(e.target.value)}
-                  placeholder="Share your thoughts about this film..." rows={3} required
+                  placeholder="Share your thoughts about this filmâ€¦" rows={3} required
                   className="w-full bg-transparent text-[#c0cad4] text-sm outline-none placeholder-[#3a4048] resize-none leading-relaxed"
                 />
                 <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/5">
@@ -206,7 +199,7 @@ const VideoModal = ({ film, onClose }) => {
                     className="px-4 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider text-[#0d0f12] transition-all disabled:opacity-40 disabled:cursor-not-allowed hover:brightness-110"
                     style={{ backgroundColor: accentColor }}
                   >
-                    {posted ? '✓ Posted!' : 'Post'}
+                    {posted ? 'âœ“ Posted!' : 'Post'}
                   </button>
                 </div>
               </div>
@@ -215,7 +208,7 @@ const VideoModal = ({ film, onClose }) => {
             {/* Comments list */}
             {comments.length === 0 ? (
               <div className="text-center py-8 bg-[#0f1218] rounded-xl border border-white/5">
-                <div className="text-3xl mb-2">💬</div>
+                <div className="text-3xl mb-2">ðŸ’¬</div>
                 <p className="text-[#4a5462] text-sm">No comments yet. Start the discussion!</p>
               </div>
             ) : (
@@ -239,7 +232,7 @@ const VideoModal = ({ film, onClose }) => {
                         onClick={() => handleDeleteComment(c.id)}
                         className="opacity-0 group-hover:opacity-100 text-[#3a4048] hover:text-red-400 text-[11px] transition-all"
                         title="Delete"
-                      >🗑️</button>
+                      >ðŸ—‘</button>
                     </div>
                     <p className="text-[#9aa4ae] text-sm leading-relaxed pl-9">{c.text}</p>
                   </div>
@@ -252,8 +245,19 @@ const VideoModal = ({ film, onClose }) => {
     </div>
   )
 }
+"{film.note}"</p>
+        {film.awards && (
+          <div className="flex items-center gap-2 mt-3">
+            <span className="text-[#e8a020]">ðŸ†</span>
+            <span className="text-[#e8a020] text-xs font-black uppercase tracking-wider">{film.awards}</span>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)
 
-// ── Film Card ─────────────────────────────────────────────────────────────────
+// â”€â”€ Film Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ShortFilmCard = ({ film, onPlay, featured = false }) => {
   const accentColor  = GENRE_COLORS[film.genre] || '#e8a020'
   const langStyle    = LANG_COLORS[film.language] || { backgroundColor: '#2a2e38', color: '#a0aab4' }
@@ -306,7 +310,7 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
             </div>
             {/* Duration */}
             <div className="absolute bottom-3 right-3 bg-black/80 text-[#e8a020] text-xs px-2.5 py-1 rounded-md font-mono font-bold">
-              🕒 {film.duration}
+              â± {film.duration}
             </div>
           </div>
 
@@ -314,10 +318,10 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
           <div className="p-7 flex flex-col justify-center flex-1">
             <div className="flex items-center gap-2 mb-4">
               <span className="text-[10px] text-[#e8a020] font-black uppercase tracking-widest border border-[#e8a020]/40 px-2.5 py-0.5 rounded-md">
-                ✧ Featured
+                âœ¦ Featured
               </span>
               {film.awards && (
-                <span className="text-[10px] text-[#f5c842] font-bold">🏆 {film.awards}</span>
+                <span className="text-[10px] text-[#f5c842] font-bold">ðŸ† {film.awards}</span>
               )}
             </div>
 
@@ -328,7 +332,7 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
               {film.title}
             </h2>
             <p className="text-[#5a6472] text-sm mb-5">
-              Dir. <span className="text-[#a0aab4] font-semibold">{film.director}</span> · {film.year}
+              Dir. <span className="text-[#a0aab4] font-semibold">{film.director}</span> Â· {film.year}
             </p>
 
             <blockquote className="border-l-2 pl-4 mb-6" style={{ borderColor: accentColor }}>
@@ -409,14 +413,14 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
 
         {/* Duration */}
         <div className="absolute bottom-2.5 right-2.5 bg-black/80 text-[#e8a020] text-[10px] px-2 py-0.5 rounded font-mono font-bold">
-          🕒 {film.duration}
+          â± {film.duration}
         </div>
       </div>
 
       {/* Body */}
       <div className="p-4 flex flex-col flex-1">
         {film.awards && (
-          <p className="text-[9px] text-[#f5c842] font-black uppercase tracking-wider mb-1.5">🏆 {film.awards}</p>
+          <p className="text-[9px] text-[#f5c842] font-black uppercase tracking-wider mb-1.5">ðŸ† {film.awards}</p>
         )}
 
         <h3
@@ -426,7 +430,7 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
           {film.title}
         </h3>
         <p className="text-[#4a5462] text-[10px] mb-3">
-          Dir. {film.director} · {film.year}
+          Dir. {film.director} Â· {film.year}
         </p>
 
         <p className="text-[#6a7480] text-xs leading-relaxed line-clamp-3 flex-1 italic">
@@ -456,7 +460,7 @@ const ShortFilmCard = ({ film, onPlay, featured = false }) => {
   )
 }
 
-// ── Upload Form ─────────────────────────────────────────────────────────────────
+// â”€â”€ Upload Form â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const UploadForm = ({ onSubmit, onCancel }) => {
   const [form, setForm] = useState({
     title: '', director: '', year: '', duration: '', genre: 'Drama',
@@ -529,7 +533,7 @@ const UploadForm = ({ onSubmit, onCancel }) => {
           <textarea
             value={form.note}
             onChange={e => setForm(f => ({ ...f, note: e.target.value }))}
-            placeholder="Write a short note about why this film is worth watching..."
+            placeholder="Write a short note about why this film is worth watchingâ€¦"
             required
             className={`${inputCls} resize-none h-24`}
           />
@@ -547,7 +551,7 @@ const UploadForm = ({ onSubmit, onCancel }) => {
   )
 }
 
-// ── Main Page ─────────────────────────────────────────────────────────────────
+// â”€â”€ Main Page â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 const ShortFilms = () => {
   const [films, setFilms]               = useState(() => getShortFilms())
   const [playingFilm, setPlayingFilm]   = useState(null)
@@ -573,16 +577,16 @@ const ShortFilms = () => {
   const english = films.filter(f => f.language === 'English').length
 
   return (
-    <div className="min-h-screen bg-[#0d0f12] fade-in">
+    <div className="min-h-screen bg-[#0d0f12]">
       {/* Video Modal */}
       {playingFilm && <VideoModal film={playingFilm} onClose={() => setPlayingFilm(null)} />}
 
-      {/* ── Header ── */}
-      <div className="bg-[#0f1218] border-b border-white/5 py-16 relative overflow-hidden">
+      {/* â”€â”€ Header â”€â”€ */}
+      <div className="bg-[#0f1218] border-b border-white/5 py-14 relative overflow-hidden">
         {/* Film strip decoration */}
-        <div className="absolute top-0 left-0 right-0 h-2.5 flex gap-2 px-2 overflow-hidden opacity-30">
-          {Array(80).fill(0).map((_, i) => (
-            <div key={i} className="h-full w-6 bg-[#e8a020] rounded-b flex-shrink-0" />
+        <div className="absolute top-0 left-0 right-0 h-2 flex gap-1.5 px-2 overflow-hidden opacity-20">
+          {Array(60).fill(0).map((_, i) => (
+            <div key={i} className="h-full w-5 bg-[#e8a020] rounded-b flex-shrink-0" />
           ))}
         </div>
 
@@ -596,7 +600,7 @@ const ShortFilms = () => {
                   Short Films
                 </h1>
                 <p className="text-[#5a6472] text-sm mt-1.5">
-                  Award-winning shorts in Tamil, Hindi & English — free on YouTube
+                  Award-winning shorts in Tamil, Hindi &amp; English â€” free on YouTube
                 </p>
               </div>
             </div>
@@ -607,7 +611,7 @@ const ShortFilms = () => {
                 showForm ? 'bg-[#1a1e26] text-[#7a8694] border border-white/10' : 'bg-[#e8a020] text-[#0d0f12] hover:bg-[#f5c842]'
               }`}
             >
-              {showForm ? '✕ Cancel' : '+ Submit Film'}
+              {showForm ? 'âœ• Cancel' : '+ Submit Film'}
             </button>
           </div>
 
@@ -633,7 +637,7 @@ const ShortFilms = () => {
         {/* Upload form */}
         {showForm && <UploadForm onSubmit={handleAddFilm} onCancel={() => setShowForm(false)} />}
 
-        {/* ── Language tabs ── */}
+        {/* â”€â”€ Language tabs â”€â”€ */}
         <div className="mb-4">
           <p className="text-[#3a4048] text-[10px] font-black uppercase tracking-widest mb-2">Language</p>
           <div className="flex flex-wrap gap-2">
@@ -656,7 +660,7 @@ const ShortFilms = () => {
           </div>
         </div>
 
-        {/* ── Genre filter ── */}
+        {/* â”€â”€ Genre filter â”€â”€ */}
         <div className="mb-8">
           <p className="text-[#3a4048] text-[10px] font-black uppercase tracking-widest mb-2">Genre</p>
           <div className="flex flex-wrap gap-2 items-center">
@@ -693,7 +697,7 @@ const ShortFilms = () => {
         {/* Empty state */}
         {filteredFilms.length === 0 && (
           <div className="text-center py-24">
-            <div className="text-6xl mb-4">🎬</div>
+            <div className="text-6xl mb-4">ðŸŽ¬</div>
             <h3 className="text-white font-black text-xl mb-3" style={{ fontFamily: "'Playfair Display', serif" }}>
               No films found
             </h3>
