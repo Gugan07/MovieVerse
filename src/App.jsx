@@ -16,7 +16,7 @@ import Profile from './pages/Profile'
 function App() {
   return (
     <Router>
-      <div className="bg-[#0d0f12] min-h-screen text-gray-100">
+      <div className="min-h-screen">
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

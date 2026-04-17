@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 
 // Skeleton loader for cards
 const CardSkeleton = () => (
-  <div className="rounded-lg overflow-hidden bg-[#131720] animate-pulse" style={{ aspectRatio: '2/3' }}>
-    <div className="w-full h-full bg-[#1e2536]" />
+  <div className="rounded-lg overflow-hidden bg-slate-200 dark:bg-[#131720] animate-pulse" style={{ aspectRatio: '2/3' }}>
+    <div className="w-full h-full bg-slate-300 dark:bg-[#1e2536]" />
   </div>
 )
 
@@ -19,7 +19,7 @@ const Home = () => {
   const heroMovie = editorialMovies[0]
 
   return (
-    <div className="bg-[#0d0f12] fade-in">
+    <div className="bg-slate-50 dark:bg-[#0d0f12] fade-in">
       <HeroSection movie={heroMovie} />
 
       {/* Trending This Week — from TMDB */}
@@ -29,14 +29,14 @@ const Home = () => {
             <div className="w-1 h-8 bg-[#e8a020] rounded-full" />
             <div>
               <p className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em] mb-0.5">Live from TMDB</p>
-              <h2 className="text-white text-2xl font-black tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-slate-900 dark:text-white text-2xl font-black tracking-tight font-playfair">
                 Trending This Week
               </h2>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-[#e8a020] animate-pulse" />
-            <span className="text-[#5a6472] text-[10px] uppercase tracking-widest">Live Data</span>
+            <span className="text-slate-400 dark:text-[#5a6472] text-[10px] uppercase tracking-widest">Live Data</span>
           </div>
         </div>
 
@@ -51,14 +51,14 @@ const Home = () => {
       </div>
 
       {/* Genre Quick Nav */}
-      <div className="border-y border-white/5 bg-[#0f1218]">
+      <div className="border-y border-black/5 dark:border-white/5 bg-white dark:bg-[#0f1218]">
         <div className="max-w-7xl mx-auto px-5 py-4">
           <div className="flex items-center gap-6 overflow-x-auto">
             <span className="text-[#3a4048] text-[10px] uppercase tracking-widest flex-shrink-0 font-bold">Browse Genre</span>
-            <div className="h-4 w-px bg-[#2a2e38] flex-shrink-0" />
+            <div className="h-4 w-px bg-slate-200 dark:bg-[#2a2e38] flex-shrink-0" />
             {['Drama', 'Sci-Fi', 'Thriller', 'Adventure', 'Comedy', 'Horror', 'Romance', 'Animation'].map(g => (
               <Link key={g} to={`/categories?genre=${g}`}
-                className="text-[#5a6472] text-[10px] uppercase tracking-widest hover:text-[#e8a020] transition-colors flex-shrink-0 font-semibold whitespace-nowrap">
+                className="text-slate-500 dark:text-[#5a6472] text-[10px] uppercase tracking-widest hover:text-[#e8a020] transition-colors flex-shrink-0 font-semibold whitespace-nowrap">
                 {g}
               </Link>
             ))}
@@ -73,12 +73,12 @@ const Home = () => {
             <div className="w-1 h-8 bg-[#e8a020] rounded-full" />
             <div>
               <p className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em] mb-0.5">Our Picks</p>
-              <h2 className="text-white text-2xl font-black tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+              <h2 className="text-slate-900 dark:text-white text-2xl font-black tracking-tight font-playfair">
                 Editorial Reviews
               </h2>
             </div>
           </div>
-          <Link to="/categories" className="text-[11px] text-[#e8a020] uppercase tracking-widest font-bold hover:text-white transition-colors border border-[#e8a020]/30 px-3 py-1.5 rounded hover:bg-[#e8a020]/10 transition-all">
+          <Link to="/categories" className="text-[11px] text-[#e8a020] uppercase tracking-widest font-bold hover:text-[#e8a020]/80 transition-colors border border-[#e8a020]/30 px-3 py-1.5 rounded hover:bg-[#e8a020]/10 transition-all">
             View All →
           </Link>
         </div>
@@ -90,20 +90,19 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Popular Right Now — TMDB */}
-      <div className="bg-[#0f1218] border-y border-white/5">
+      <div className="bg-white dark:bg-[#0f1218] border-y border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-5 py-14">
           <div className="flex items-end justify-between mb-7">
             <div className="flex items-center gap-4">
               <div className="w-1 h-8 bg-[#e8a020] rounded-full" />
               <div>
                 <p className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em] mb-0.5">TMDB Charts</p>
-                <h2 className="text-white text-2xl font-black tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h2 className="text-slate-900 dark:text-white text-2xl font-black tracking-tight font-playfair">
                   Popular Right Now
                 </h2>
               </div>
             </div>
-            <Link to="/categories" className="text-[11px] text-[#e8a020] uppercase tracking-widest font-bold hover:text-white transition-colors">
+            <Link to="/categories" className="text-[11px] text-[#e8a020] uppercase tracking-widest font-bold hover:text-[#e8a020]/80 transition-colors">
               Browse All →
             </Link>
           </div>
@@ -120,7 +119,7 @@ const Home = () => {
       </div>
 
       {/* Stats */}
-      <div className="max-w-7xl mx-auto px-5 py-20 border-t border-white/5">
+      <div className="max-w-7xl mx-auto px-5 py-20 border-t border-black/5 dark:border-white/5">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
             { val: '8', label: 'Film Reviews', icon: '🎬' },
@@ -133,12 +132,12 @@ const Home = () => {
               className="glass-premium rounded-2xl p-6 flex items-center gap-4 hover:border-[#e8a020]/30 transition-all duration-500 fade-up"
               style={{ animationDelay: `${i * 100}ms` }}
             >
-              <div className="w-12 h-12 rounded-xl bg-[#e8a020]/10 flex items-center justify-center text-2xl shadow-inner">
+              <div className="w-12 h-12 rounded-xl bg-[#e8a020]/10 flex items-center justify-center text-2xl shadow-inner border border-[#e8a020]/20">
                 {s.icon}
               </div>
               <div>
-                <div className="text-white text-3xl font-black leading-none mb-1" style={{ fontFamily: "'Playfair Display', serif" }}>{s.val}</div>
-                <div className="text-[#5a6472] text-[10px] font-black uppercase tracking-[0.2em]">{s.label}</div>
+                <div className="text-slate-900 dark:text-white text-3xl font-black leading-none mb-1 font-playfair">{s.val}</div>
+                <div className="text-slate-500 dark:text-[#5a6472] text-[10px] font-black uppercase tracking-[0.2em]">{s.label}</div>
               </div>
             </div>
           ))}

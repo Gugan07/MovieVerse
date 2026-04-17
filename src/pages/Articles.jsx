@@ -8,8 +8,8 @@ import {
 
 // ── Tag colour map ─────────────────────────────────────────────────────────────
 const TAG_COLOURS = {
-  Analysis:    { bg: '#e8a020', text: '#0d0f12' },
-  Music:       { bg: '#40bcf4', text: '#0d0f12' },
+  Analysis: { bg: '#e8a020', text: '#0d0f12' },
+  Music: { bg: '#40bcf4', text: '#0d0f12' },
   Performance: { bg: '#a78bfa', text: '#0d0f12' },
 }
 
@@ -40,7 +40,7 @@ const ArticleForm = ({ initialData = EMPTY_FORM, onSubmit, onCancel, onDelete, i
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-[#0f1218] border-l-2 border-[#e8a020] rounded-xl p-8 mb-10 animate-[fadeIn_0.2s_ease]"
+      className="bg-white dark:bg-[#0f1218] border-l-2 border-[#e8a020] rounded-xl p-8 mb-10 animate-[fadeIn_0.2s_ease] border border-black/5 dark:border-white/5 shadow-sm"
     >
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-lg font-black text-white" style={{ fontFamily: "'Playfair Display', serif" }}>
@@ -136,9 +136,9 @@ const ArticleForm = ({ initialData = EMPTY_FORM, onSubmit, onCancel, onDelete, i
 // ── Article Comment Section ────────────────────────────────────────────────────
 const ArticleComments = ({ articleId }) => {
   const [comments, setComments] = useState(() => getArticleComments(articleId))
-  const [author, setAuthor]     = useState('')
-  const [text, setText]         = useState('')
-  const [posted, setPosted]     = useState(false)
+  const [author, setAuthor] = useState('')
+  const [text, setText] = useState('')
+  const [posted, setPosted] = useState(false)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -155,21 +155,21 @@ const ArticleComments = ({ articleId }) => {
   }
 
   return (
-    <div className="mt-10 pt-8 border-t border-white/5">
+    <div className="mt-10 pt-8 border-t border-black/5 dark:border-white/5">
       <div className="flex items-center gap-3 mb-6">
         <div className="w-0.5 h-5 bg-[#e8a020] rounded-full" />
-        <h3 className="text-white font-black text-sm uppercase tracking-wider">Discussion</h3>
+        <h3 className="text-slate-900 dark:text-white font-black text-sm uppercase tracking-wider">Discussion</h3>
         <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-[#e8a020]/15 text-[#e8a020]">
           {comments.length} comment{comments.length !== 1 ? 's' : ''}
         </span>
       </div>
 
       <form onSubmit={handleSubmit} className="mb-8">
-        <div className="bg-[#131720] border border-white/5 rounded-xl p-4 focus-within:border-[#e8a020]/40 transition-colors">
+        <div className="bg-slate-50 dark:bg-[#131720] border border-black/5 dark:border-white/5 rounded-xl p-4 focus-within:border-[#e8a020]/40 transition-colors">
           <input
             type="text" value={author} onChange={e => setAuthor(e.target.value)}
             placeholder="Your name (optional)" maxLength={40}
-            className="w-full bg-transparent text-white text-xs mb-3 outline-none placeholder-[#3a4048] font-semibold"
+            className="w-full bg-transparent text-slate-900 dark:text-white text-xs mb-3 outline-none placeholder-slate-400 dark:placeholder-[#3a4048] font-semibold"
           />
           <textarea
             value={text} onChange={e => setText(e.target.value)}
@@ -189,22 +189,22 @@ const ArticleComments = ({ articleId }) => {
       </form>
 
       {comments.length === 0 ? (
-        <div className="text-center py-10 bg-[#0f1218] rounded-xl border border-white/5">
+        <div className="text-center py-10 bg-white dark:bg-[#0f1218] rounded-xl border border-black/5 dark:border-white/5">
           <div className="text-3xl mb-2">💬</div>
-          <p className="text-[#4a5462] text-sm">No comments yet. Start the discussion!</p>
+          <p className="text-slate-500 dark:text-[#4a5462] text-sm">No comments yet. Start the discussion!</p>
         </div>
       ) : (
         <div className="space-y-4">
           {comments.map(c => (
-            <div key={c.id} className="group bg-[#0f1218] border border-white/5 rounded-xl px-5 py-4 hover:border-white/10 transition-colors">
+            <div key={c.id} className="group bg-white dark:bg-[#0f1218] border border-black/5 dark:border-white/5 rounded-xl px-5 py-4 hover:border-black/10 dark:hover:border-white/10 transition-colors">
               <div className="flex items-start justify-between gap-2 mb-2">
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black flex-shrink-0 bg-[#e8a020]/20 text-[#e8a020]">
                     {c.author?.[0]?.toUpperCase() || '?'}
                   </div>
                   <div>
-                    <span className="text-white text-xs font-black">{c.author}</span>
-                    <span className="text-[#3a4048] text-[10px] ml-2">{c.date}</span>
+                    <span className="text-slate-900 dark:text-white text-xs font-black">{c.author}</span>
+                    <span className="text-slate-400 dark:text-[#3a4048] text-[10px] ml-2">{c.date}</span>
                   </div>
                 </div>
                 <button onClick={() => handleDelete(c.id)}
@@ -222,8 +222,8 @@ const ArticleComments = ({ articleId }) => {
 
 // ── Article detail page ────────────────────────────────────────────────────────
 const ArticleDetail = ({ article, onBack, onEdit }) => {
-  const [liked, setLiked]             = useState(isLiked(article.id))
-  const [likeCount, setLikeCount]     = useState(() => getArticleLikeCount(article.id))
+  const [liked, setLiked] = useState(isLiked(article.id))
+  const [likeCount, setLikeCount] = useState(() => getArticleLikeCount(article.id))
   const [shareCopied, setShareCopied] = useState(false)
 
   const handleLike = () => {
@@ -236,7 +236,7 @@ const ArticleDetail = ({ article, onBack, onEdit }) => {
     const shareText = `${article.title} — ${article.author}`
     const url = window.location.href
     if (navigator.share) {
-      try { await navigator.share({ title: article.title, text: shareText, url }) } catch {}
+      try { await navigator.share({ title: article.title, text: shareText, url }) } catch { }
     } else {
       await navigator.clipboard.writeText(`${shareText}\n${url}`)
       setShareCopied(true)
@@ -245,114 +245,113 @@ const ArticleDetail = ({ article, onBack, onEdit }) => {
   }
 
   return (
-  <div className="min-h-screen bg-[#0d0f12]">
-    {/* Backdrop hero */}
-    <div className="relative h-72 md:h-96 overflow-hidden">
-      <img
-        src={article.backdrop || article.image}
-        alt={article.title}
-        className="w-full h-full object-cover"
-        style={{ filter: 'brightness(0.35)' }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0f12] via-transparent to-transparent" />
-
-      {/* Poster overlay */}
-      <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-5 pb-0 flex items-end gap-5">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0d0f12]">
+      {/* Backdrop hero */}
+      <div className="relative h-72 md:h-96 overflow-hidden">
         <img
-          src={article.image}
-          alt={article.film}
-          className="w-24 md:w-32 rounded-lg shadow-2xl ring-1 ring-white/10 -mb-12 flex-shrink-0"
+          src={article.backdrop || article.image}
+          alt={article.title}
+          className="w-full h-full object-cover"
+          style={{ filter: 'brightness(0.35)' }}
         />
-        <div className="pb-3">
-          {article.tag && <TagBadge tag={article.tag} />}
-          <h1
-            className="text-2xl md:text-3xl font-black text-white mt-2 leading-tight"
-            style={{ fontFamily: "'Playfair Display', serif" }}
-          >
-            {article.title}
-          </h1>
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-50 dark:from-[#0d0f12] via-transparent to-transparent" />
+
+        {/* Poster overlay */}
+        <div className="absolute bottom-0 left-0 right-0 max-w-4xl mx-auto px-5 pb-0 flex items-end gap-5">
+          <img
+            src={article.image}
+            alt={article.film}
+            className="w-24 md:w-32 rounded-lg shadow-2xl ring-1 ring-white/10 -mb-12 flex-shrink-0"
+          />
+          <div className="pb-3">
+            {article.tag && <TagBadge tag={article.tag} />}
+            <h1
+              className="text-2xl md:text-3xl font-black text-white mt-2 leading-tight"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+            >
+              {article.title}
+            </h1>
+          </div>
         </div>
       </div>
-    </div>
 
-    {/* Content */}
-    <div className="max-w-4xl mx-auto px-5 pt-16 pb-16">
-      {/* Back + meta */}
-      <div className="flex items-center justify-between mb-8">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1.5 text-[#e8a020] text-xs font-bold uppercase tracking-widest hover:text-white transition-colors"
-        >
-          ← Back to Articles
-        </button>
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-[#4a5462] text-xs">
-            <span className="text-white font-semibold">{article.author}</span>
-            <span>·</span>
-            <span>{article.date}</span>
-            {article.readTime && <><span>·</span><span>{article.readTime}</span></>}
-          </div>
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-5 pt-16 pb-16">
+        {/* Back + meta */}
+        <div className="flex items-center justify-between mb-8">
           <button
-            onClick={onEdit}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider rounded border border-white/10 text-[#7a8694] hover:border-[#e8a020]/50 hover:text-[#e8a020] transition-colors"
+            onClick={onBack}
+            className="flex items-center gap-1.5 text-[#e8a020] text-xs font-bold uppercase tracking-widest hover:text-white transition-colors"
           >
-            ✏️ Edit
+            ← Back to Articles
+          </button>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 text-[#4a5462] text-xs">
+              <span className="text-white font-semibold">{article.author}</span>
+              <span>·</span>
+              <span>{article.date}</span>
+              {article.readTime && <><span>·</span><span>{article.readTime}</span></>}
+            </div>
+            <button
+              onClick={onEdit}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-[10px] font-black uppercase tracking-wider rounded border border-black/10 dark:border-white/10 text-slate-500 dark:text-[#7a8694] hover:border-[#e8a020]/50 hover:text-[#e8a020] transition-colors"
+            >
+              ✏️ Edit
+            </button>
+          </div>
+        </div>
+
+        {/* Film info pill */}
+        {article.film && (
+          <div className="flex items-center gap-2 mb-6 bg-white dark:bg-[#0f1218] border border-black/5 dark:border-white/5 rounded-lg px-4 py-2.5 w-fit shadow-sm">
+            <img src={article.image} alt="" className="w-6 h-8 object-cover rounded" />
+            <div>
+              <div className="text-slate-900 dark:text-white text-xs font-bold">{article.film}</div>
+              {article.year && <div className="text-slate-500 dark:text-[#4a5462] text-[10px]">{article.year}</div>}
+            </div>
+          </div>
+        )}
+
+        {/* Pull quote */}
+        <blockquote className="border-l-2 border-[#e8a020] pl-5 mb-8 bg-[#0f1218] py-4 pr-4 rounded-r-lg">
+          <p className="text-[#a0aab4] italic text-sm leading-relaxed">{article.excerpt}</p>
+        </blockquote>
+
+        {/* Body */}
+        <div
+          className="text-[#c0cad4] text-[0.95rem] leading-[1.9] whitespace-pre-wrap"
+          style={{ fontFamily: "'Georgia', serif" }}
+        >
+          {article.content}
+        </div>
+
+        {/* Actions bar */}
+        <div className="flex gap-3 mt-10 pt-6 border-t border-white/5 items-center">
+          <button
+            onClick={handleLike}
+            className={`flex items-center gap-2 px-5 py-2 rounded font-black text-xs uppercase tracking-wider transition-all ${liked ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-[#e8a020] text-[#0d0f12] hover:bg-[#f5c842]'
+              }`}
+          >
+            <span>{liked ? '♥' : '♡'}</span>
+            <span>{liked ? 'Liked' : 'Like'}</span>
+            {likeCount > 0 && (
+              <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${liked ? 'bg-white/20' : 'bg-black/15'}`}>
+                {likeCount}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={handleShare}
+            className="flex items-center gap-2 border border-black/10 dark:border-white/10 text-slate-500 dark:text-[#7a8694] px-5 py-2 rounded text-xs font-semibold hover:text-slate-900 dark:hover:text-white hover:border-black/20 dark:hover:border-white/20 transition-colors"
+          >
+            {shareCopied ? '✓ Copied!' : '↗ Share'}
           </button>
         </div>
+
+        {/* Comment section */}
+        <ArticleComments articleId={article.id} />
       </div>
-
-      {/* Film info pill */}
-      {article.film && (
-        <div className="flex items-center gap-2 mb-6 bg-[#0f1218] border border-white/5 rounded-lg px-4 py-2.5 w-fit">
-          <img src={article.image} alt="" className="w-6 h-8 object-cover rounded" />
-          <div>
-            <div className="text-white text-xs font-bold">{article.film}</div>
-            {article.year && <div className="text-[#4a5462] text-[10px]">{article.year}</div>}
-          </div>
-        </div>
-      )}
-
-      {/* Pull quote */}
-      <blockquote className="border-l-2 border-[#e8a020] pl-5 mb-8 bg-[#0f1218] py-4 pr-4 rounded-r-lg">
-        <p className="text-[#a0aab4] italic text-sm leading-relaxed">{article.excerpt}</p>
-      </blockquote>
-
-      {/* Body */}
-      <div
-        className="text-[#c0cad4] text-[0.95rem] leading-[1.9] whitespace-pre-wrap"
-        style={{ fontFamily: "'Georgia', serif" }}
-      >
-        {article.content}
-      </div>
-
-      {/* Actions bar */}
-      <div className="flex gap-3 mt-10 pt-6 border-t border-white/5 items-center">
-        <button
-          onClick={handleLike}
-          className={`flex items-center gap-2 px-5 py-2 rounded font-black text-xs uppercase tracking-wider transition-all ${
-            liked ? 'bg-red-500 text-white hover:bg-red-600' : 'bg-[#e8a020] text-[#0d0f12] hover:bg-[#f5c842]'
-          }`}
-        >
-          <span>{liked ? '♥' : '♡'}</span>
-          <span>{liked ? 'Liked' : 'Like'}</span>
-          {likeCount > 0 && (
-            <span className={`px-1.5 py-0.5 rounded-full text-[10px] font-black ${liked ? 'bg-white/20' : 'bg-black/15'}`}>
-              {likeCount}
-            </span>
-          )}
-        </button>
-        <button
-          onClick={handleShare}
-          className="flex items-center gap-2 border border-white/10 text-[#7a8694] px-5 py-2 rounded text-xs font-semibold hover:text-white hover:border-white/20 transition-colors"
-        >
-          {shareCopied ? '✓ Copied!' : '↗ Share'}
-        </button>
-      </div>
-
-      {/* Comment section */}
-      <ArticleComments articleId={article.id} />
     </div>
-  </div>
   )
 }
 
@@ -378,6 +377,13 @@ const Articles = () => {
       return matchTag && matchSearch
     })
   }, [articles, search, activeTag])
+
+  const handleCancelForm = () => setShowForm(false)
+  const handleToggleForm = () => setShowForm(f => !f)
+  const handleClearSearch = () => { setSearch(''); setActiveTag('All') }
+  const handleCancelEdit = () => setEditing(null)
+  const handleSearchChange = (e) => setSearch(e.target.value)
+  const handleClearSearchInput = () => setSearch('')
 
   // ── Handlers ────────────────────────────────────────────────────────────────
   const handlePublish = (form) => {
@@ -410,7 +416,7 @@ const Articles = () => {
   // ── Edit modal overlay ───────────────────────────────────────────────────────
   if (editing) {
     return (
-      <div className="min-h-screen bg-[#0d0f12]">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#0d0f12]">
         <div className="bg-[#0f1218] border-b border-white/5 py-8">
           <div className="max-w-4xl mx-auto px-5">
             <p className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.2em] mb-1">Film Writing</p>
@@ -433,7 +439,7 @@ const Articles = () => {
               content: editing.content || '',
             }}
             onSubmit={handleSaveEdit}
-            onCancel={() => setEditing(null)}
+            onCancel={handleCancelEdit}
             onDelete={() => handleDelete(editing.id)}
             isEdit
           />
@@ -453,12 +459,11 @@ const Articles = () => {
     )
   }
 
-  // ── List view ────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0d0f12] fade-in">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0d0f12] fade-in">
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
-      <div className="bg-[#0f1218] border-b border-white/5 py-16 relative overflow-hidden">
+      <div className="bg-white dark:bg-[#0f1218] border-b border-black/5 dark:border-white/5 py-16 relative overflow-hidden">
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: `url('https://www.transparenttextures.com/patterns/carbon-fibre.png')`
         }} />
@@ -470,17 +475,16 @@ const Articles = () => {
               <div className="w-1.5 h-14 bg-[#e8a020] rounded-full shadow-[0_0_15px_rgba(232,160,32,0.4)]" />
               <div>
                 <p className="text-[#e8a020] text-[10px] font-black uppercase tracking-[0.3em] mb-1.5">Film Journalism</p>
-                <h1 className="text-5xl font-black text-white leading-none tracking-tight" style={{ fontFamily: "'Playfair Display', serif" }}>
+                <h1 className="text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tight font-playfair">
                   Film Articles
                 </h1>
-                <p className="text-[#5a6472] text-sm mt-3 max-w-md leading-relaxed">Critical writing on cinema, legendary directors and the evolving art of visual storytelling.</p>
+                <p className="text-slate-500 dark:text-[#5a6472] text-sm mt-3 max-w-md leading-relaxed">Critical writing on cinema, legendary directors and the evolving art of visual storytelling.</p>
               </div>
             </div>
             <button
-              onClick={() => setShowForm(f => !f)}
-              className={`flex-shrink-0 px-5 py-2.5 rounded-md font-black text-xs uppercase tracking-wider transition-colors ${
-                showForm ? 'bg-[#1a1e26] text-[#7a8694] border border-white/10' : 'bg-[#e8a020] text-[#0d0f12] hover:bg-[#f5c842]'
-              }`}
+              onClick={handleToggleForm}
+              className={`flex-shrink-0 px-5 py-2.5 rounded-md font-black text-xs uppercase tracking-wider transition-colors ${showForm ? 'bg-[#1a1e26] text-[#7a8694] border border-white/10' : 'bg-[#e8a020] text-[#0d0f12] hover:bg-[#f5c842]'
+                }`}
             >
               {showForm ? '✕ Cancel' : '+ Write'}
             </button>
@@ -492,12 +496,12 @@ const Articles = () => {
             <input
               type="text"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={handleSearchChange}
               placeholder="Search by film, author or topic…"
-              className="w-full bg-[#131720] border border-white/8 text-white text-sm rounded-md pl-9 pr-8 py-2.5 outline-none focus:border-[#e8a020] transition-colors placeholder-[#4a5462]"
+              className="w-full bg-slate-100 dark:bg-[#131720] border border-black/5 dark:border-white/8 text-slate-900 dark:text-white text-sm rounded-md pl-9 pr-8 py-2.5 outline-none focus:border-[#e8a020] transition-colors placeholder-slate-400 dark:placeholder-[#4a5462]"
             />
             {search && (
-              <button onClick={() => setSearch('')} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#4a5462] hover:text-white text-xs">✕</button>
+              <button onClick={handleClearSearchInput} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#4a5462] hover:text-white text-xs">✕</button>
             )}
           </div>
 
@@ -507,11 +511,10 @@ const Articles = () => {
               <button
                 key={tag}
                 onClick={() => setActiveTag(tag)}
-                className={`px-3 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all ${
-                  activeTag === tag
+                className={`px-3 py-1 rounded text-[10px] font-black uppercase tracking-wider transition-all ${activeTag === tag
                     ? 'bg-[#e8a020] text-[#0d0f12]'
-                    : 'bg-[#1a1e26] text-[#5a6472] border border-white/5 hover:text-white'
-                }`}
+                    : 'bg-slate-100 dark:bg-[#1a1e26] text-slate-500 dark:text-[#5a6472] border border-black/5 dark:border-white/5 hover:text-slate-900 dark:hover:text-white'
+                  }`}
               >
                 {tag}
               </button>
@@ -527,20 +530,20 @@ const Articles = () => {
         {showForm && (
           <ArticleForm
             onSubmit={handlePublish}
-            onCancel={() => setShowForm(false)}
+            onCancel={handleCancelForm}
           />
         )}
 
         {/* Search status */}
         {(search || activeTag !== 'All') && (
           <div className="flex items-center gap-3 mb-6">
-            <p className="text-[#5a6472] text-sm">
-              <span className="text-white font-semibold">{filtered.length}</span>
+            <p className="text-slate-500 dark:text-[#5a6472] text-sm">
+              <span className="text-slate-900 dark:text-white font-semibold">{filtered.length}</span>
               {' '}article{filtered.length !== 1 ? 's' : ''} found
               {search && <span> for <span className="text-[#e8a020]">"{search}"</span></span>}
             </p>
             <button
-              onClick={() => { setSearch(''); setActiveTag('All') }}
+              onClick={handleClearSearch}
               className="text-[10px] text-[#e8a020] font-bold uppercase tracking-wider hover:text-white transition-colors"
             >
               Clear
@@ -552,7 +555,7 @@ const Articles = () => {
         {filtered.length === 0 && (
           <div className="py-20 text-center">
             <div className="text-5xl mb-4">📝</div>
-            <h3 className="text-white font-black text-xl mb-2" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <h3 className="text-slate-900 dark:text-white font-black text-xl mb-2 font-playfair">
               {search || activeTag !== 'All' ? 'No Articles Found' : 'No Articles Yet'}
             </h3>
             <p className="text-[#5a6472] text-sm mb-5">
@@ -562,7 +565,7 @@ const Articles = () => {
             </p>
             {(search || activeTag !== 'All') && (
               <button
-                onClick={() => { setSearch(''); setActiveTag('All') }}
+                onClick={handleClearSearch}
                 className="bg-[#e8a020] text-[#0d0f12] px-5 py-2 rounded font-black text-xs uppercase tracking-wider hover:bg-[#f5c842] transition-colors"
               >
                 Show All
@@ -576,10 +579,10 @@ const Articles = () => {
           <div className="relative group mb-5">
             <div
               onClick={() => setSelected(filtered[0])}
-              className="cursor-pointer flex flex-col md:flex-row rounded-2xl overflow-hidden bg-[#0f1218] border border-white/5 group-hover:border-[#e8a020]/30 transition-all duration-500 fade-up glass-premium"
+              className="cursor-pointer flex flex-col md:flex-row rounded-2xl overflow-hidden bg-white dark:bg-[#0f1218] border border-black/5 dark:border-white/5 group-hover:border-[#e8a020]/30 transition-all duration-500 fade-up glass-premium"
             >
               {/* Image */}
-              <div className="md:w-[400px] h-64 md:h-auto flex-shrink-0 overflow-hidden bg-[#131720]">
+              <div className="md:w-[400px] h-64 md:h-auto flex-shrink-0 overflow-hidden bg-slate-100 dark:bg-[#131720]">
                 <img
                   src={filtered[0].image}
                   alt={filtered[0].title}
@@ -591,12 +594,11 @@ const Articles = () => {
                 <div className="flex items-center gap-2 mb-3">
                   {filtered[0].tag && <TagBadge tag={filtered[0].tag} />}
                   {filtered[0].film && (
-                    <span className="text-[#5a6472] text-[10px] uppercase tracking-wider">· {filtered[0].film} ({filtered[0].year})</span>
+                    <span className="text-slate-400 dark:text-[#5a6472] text-[10px] uppercase tracking-wider">· {filtered[0].film} ({filtered[0].year})</span>
                   )}
                 </div>
                 <h2
-                  className="text-2xl font-black text-white mb-2 leading-tight group-hover:text-[#e8a020] transition-colors"
-                  style={{ fontFamily: "'Playfair Display', serif" }}
+                  className="text-2xl font-black text-slate-900 dark:text-white mb-2 leading-tight group-hover:text-[#e8a020] transition-colors font-playfair"
                 >
                   {filtered[0].title}
                 </h2>
@@ -624,7 +626,7 @@ const Articles = () => {
           {(search || activeTag !== 'All' ? filtered : filtered.slice(1)).map(article => (
             <div
               key={article.id}
-              className="group relative flex rounded-2xl overflow-hidden bg-[#0f1218] border border-white/5 hover:border-[#e8a020]/30 transition-all duration-500 fade-up"
+              className="group relative flex rounded-2xl overflow-hidden bg-white dark:bg-[#0f1218] border border-black/5 dark:border-white/5 hover:border-[#e8a020]/30 transition-all duration-500 fade-up shadow-sm dark:shadow-none"
             >
               {/* Clickable area */}
               <div
@@ -648,7 +650,7 @@ const Articles = () => {
                     )}
                   </div>
                   <h3
-                    className="text-white font-black text-sm leading-snug mb-1 group-hover:text-[#e8a020] transition-colors line-clamp-2"
+                    className="text-slate-900 dark:text-white font-black text-sm leading-snug mb-1 group-hover:text-[#e8a020] transition-colors line-clamp-2"
                     style={{ fontFamily: "'Playfair Display', serif" }}
                   >
                     {article.title}
