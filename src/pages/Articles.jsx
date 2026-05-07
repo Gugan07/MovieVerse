@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   isLiked, toggleLike,
   getArticleLikeCount,
@@ -357,12 +357,16 @@ const ArticleDetail = ({ article, onBack, onEdit }) => {
 
 // ── Main Articles list ─────────────────────────────────────────────────────────
 const Articles = () => {
-  const [articles, setArticles] = useState(() => getArticles())
+  const [articles, setArticles] = useState([])
   const [selected, setSelected] = useState(null)
-  const [editing, setEditing] = useState(null)   // article being edited (or null)
+  const [editing, setEditing] = useState(null)
   const [search, setSearch] = useState('')
   const [activeTag, setActiveTag] = useState('All')
   const [showForm, setShowForm] = useState(false)
+
+  useEffect(() => {
+    getArticles().then(data => setArticles(Array.isArray(data) ? data : []))
+  }, [])
 
   // All unique tags
   const tags = ['All', ...new Set(articles.map(a => a.tag).filter(Boolean))]
@@ -385,30 +389,26 @@ const Articles = () => {
   const handleSearchChange = (e) => setSearch(e.target.value)
   const handleClearSearchInput = () => setSearch('')
 
-  // ── Handlers ────────────────────────────────────────────────────────────────
-  const handlePublish = (form) => {
-    const articleData = {
-      ...form,
-      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
-    }
-    const updated = saveArticle(articleData)
-    setArticles(updated)
+  const handlePublish = async (form) => {
+    const articleData = { ...form, date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }
+    const updated = await saveArticle(articleData)
+    setArticles(Array.isArray(updated) ? updated : articles)
     setShowForm(false)
   }
 
-  const handleSaveEdit = (form) => {
-    const updated = updateArticle(editing.id, form)
-    setArticles(updated)
-    // If currently viewing the edited article, refresh it
+  const handleSaveEdit = async (form) => {
+    const updated = await updateArticle(editing.id, form)
+    const list = Array.isArray(updated) ? updated : articles.map(a => String(a.id) === String(editing.id) ? { ...a, ...form } : a)
+    setArticles(list)
     if (selected && String(selected.id) === String(editing.id)) {
-      setSelected(updated.find(a => String(a.id) === String(editing.id)) || null)
+      setSelected(list.find(a => String(a.id) === String(editing.id)) || null)
     }
     setEditing(null)
   }
 
-  const handleDelete = (id) => {
-    const updated = deleteArticle(id)
-    setArticles(updated)
+  const handleDelete = async (id) => {
+    const updated = await deleteArticle(id)
+    setArticles(Array.isArray(updated) ? updated : articles.filter(a => String(a.id) !== String(id)))
     setEditing(null)
     setSelected(null)
   }

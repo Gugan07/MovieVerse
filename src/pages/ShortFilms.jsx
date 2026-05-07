@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { languages, genres } from '../data/shortFilms'
 import {
   getShortFilms, saveShortFilm,
@@ -545,11 +545,15 @@ const UploadForm = ({ onSubmit, onCancel }) => {
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 const ShortFilms = () => {
-  const [films, setFilms] = useState(() => getShortFilms())
+  const [films, setFilms] = useState([])
   const [playingFilm, setPlayingFilm] = useState(null)
   const [showForm, setShowForm] = useState(false)
   const [activeLang, setActiveLang] = useState('All')
   const [activeGenre, setActiveGenre] = useState('All')
+
+  useEffect(() => {
+    getShortFilms().then(data => setFilms(Array.isArray(data) ? data : []))
+  }, [])
 
   const filteredFilms = films.filter(f => {
     const matchLang = activeLang === 'All' || f.language === activeLang
@@ -557,9 +561,9 @@ const ShortFilms = () => {
     return matchLang && matchGenre
   })
 
-  const handleAddFilm = (newFilm) => {
-    const updated = saveShortFilm(newFilm)
-    setFilms(updated)
+  const handleAddFilm = async (newFilm) => {
+    const updated = await saveShortFilm(newFilm)
+    setFilms(Array.isArray(updated) ? updated : [newFilm, ...films])
     setShowForm(false)
   }
 

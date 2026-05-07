@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { getMasterclasses, saveMasterclass, deleteMasterclass } from '../services/storage'
 
 // ── YouTube ID extractor ────────────────────────────────────────────────────────
@@ -96,20 +96,24 @@ const MasterclassForm = ({ onSubmit, onCancel }) => {
 }
 
 const Masterclass = () => {
-  const [classes, setClasses] = useState(() => getMasterclasses())
+  const [classes, setClasses] = useState([])
   const [activeVideo, setActiveVideo] = useState(null)
   const [showForm, setShowForm] = useState(false)
 
-  const handleAdd = (newMc) => {
-    const updated = saveMasterclass(newMc)
-    setClasses(updated)
+  useEffect(() => {
+    getMasterclasses().then(data => setClasses(Array.isArray(data) ? data : []))
+  }, [])
+
+  const handleAdd = async (newMc) => {
+    const updated = await saveMasterclass(newMc)
+    setClasses(Array.isArray(updated) ? updated : [newMc, ...classes])
     setShowForm(false)
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm('Delete this masterclass session?')) {
-      const updated = deleteMasterclass(id)
-      setClasses(updated)
+      const updated = await deleteMasterclass(id)
+      setClasses(Array.isArray(updated) ? updated : classes.filter(c => String(c.id) !== String(id)))
     }
   }
 
